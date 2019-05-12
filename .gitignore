@@ -2,3 +2,5 @@ env
 .vscode
 __pycache__
 dist
+*.spec
+build
