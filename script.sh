@@ -1,17 +1,5 @@
 #!/bin/bash
 
-# Check if there is more than one monitor
-MONITORS_AMOUNT=`xrandr --listactivemonitors | wc -l`  
-
-if (( $MONITORS_AMOUNT <= 2 )); then
-    echo "Are you sure that you have at least two monitors?"
-    read -p "Do you want to continue? (y/n) " -n 1 -r
-    echo ""
-    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
-        exit
-    fi
-fi
-
 # Probing v4l2loopback
 sudo modprobe v4l2loopback video_nr=4 'card_label=VirtualScreen'
 
