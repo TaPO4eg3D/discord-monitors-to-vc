@@ -1,3 +1,6 @@
+# Maintainance note
+This project is **not maintained** anymore, please use other solutions like - https://github.com/ShayBox/Mon2Cam
+
 # discord-monitors-to-vc
 Stream any of your screens to a virtual camera. Designed specifically for Discord and Linux
 
