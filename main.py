@@ -149,7 +149,7 @@ class Main:
             self.emulating_proccess = None
         monitor = self.monitors[self.active_monitor]
         self.emulating_proccess = subprocess.Popen(
-            'ffmpeg -hide_banner -loglevel panic -f x11grab -r {} -s "{}"x"{}" -i $DISPLAY+"{}","{}" -vcodec rawvideo -pix_fmt yuv420p -threads 0 -f v4l2 /dev/video4'.format(
+            'ffmpeg -hide_banner -loglevel panic -f x11grab -r {} -s "{}"x"{}" -i $DISPLAY+"{}","{}" -vf hflip -c:a copy -vcodec rawvideo -pix_fmt yuv420p -threads 0 -f v4l2 /dev/video4'.format(
                 self.fps_rate, monitor.width, monitor.height, monitor.X, monitor.Y
             ),
             shell=True,
