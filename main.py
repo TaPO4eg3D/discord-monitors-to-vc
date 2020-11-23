@@ -68,8 +68,7 @@ class Main:
 
         self.screen = screen
         self.fps_rate = args.fps_rate
-        self.hflip = args.hflip
-        self.vflip = args.vflip
+        self.flip = args.flip
 
         # Parse all available monitors and pass it to the monitor class
         self.monitors = parse_monitors()
@@ -150,9 +149,16 @@ class Main:
             self.emulating_proccess.terminate()
             self.emulating_proccess = None
         monitor = self.monitors[self.active_monitor]
+        flip_args = ""
+        if self.flip != "none":
+            flip_args += "-vf "
+            if self.flip == "h":
+                flip_args += "hflip"
+            else:
+                flip_args += "vflip"
         self.emulating_proccess = subprocess.Popen(
-            'ffmpeg -hide_banner -loglevel panic -f x11grab -r {} -s "{}"x"{}" -i $DISPLAY+"{}","{}" -vcodec rawvideo -pix_fmt yuv420p -threads 0 -f v4l2 /dev/video4'.format(
-                self.fps_rate, monitor.width, monitor.height, monitor.X, monitor.Y
+            'ffmpeg -hide_banner -loglevel panic -f x11grab -r {} -s "{}"x"{}" -i $DISPLAY+"{}","{}" {} -vcodec rawvideo -pix_fmt yuv420p -threads 0 -f v4l2 /dev/video4'.format(
+                self.fps_rate, monitor.width, monitor.height, monitor.X, monitor.Y, flip_args
             ),
             shell=True,
             stdout=subprocess.DEVNULL
@@ -172,8 +178,7 @@ if __name__ == '__main__':
     # Parse arguments
     parser = argparse.ArgumentParser(description='Helps stream desktop in Discord through virtual cams')
     parser.add_argument('--fps', dest='fps_rate', default="60", help="Sets FPS rate (default is 60)")
-    parser.add_argument('--flip-horizontal', dest='hflip', default="false", help="Flips the screen horizontally (default is false)")
-    parser.add_argument('--flip-vertical', dest='vflip', default="false", help="Flips the screen vertically (default is false)")
+    parser.add_argument('--flip', dest='flip', default="none", help="Flips the screen (options are 'h' and 'v') (default is none)")
     args = parser.parse_args()
     # Probing v4l2loopback
     subprocess.run('sudo modprobe v4l2loopback video_nr=4 \'card_label=VirtualScreen\'', shell=True)
