@@ -26,6 +26,7 @@ python main.py
 
 Available arguments:
 * --fps FPS_RATE - set the fps_rate of screen sharing. The default value is 60
+* --flip FLIP_DIRECTION - set the flip_direction of screen sharing (to flip pass in ```h``` or ```v```). The default value is none
 
 You'll see the list of all monitors. Select the desired one by using **arrow keys** and hit **Enter**. 
 
