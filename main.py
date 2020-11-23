@@ -68,6 +68,8 @@ class Main:
 
         self.screen = screen
         self.fps_rate = args.fps_rate
+        self.hflip = args.hflip
+        self.vflip = args.vflip
 
         # Parse all available monitors and pass it to the monitor class
         self.monitors = parse_monitors()
@@ -170,6 +172,8 @@ if __name__ == '__main__':
     # Parse arguments
     parser = argparse.ArgumentParser(description='Helps stream desktop in Discord through virtual cams')
     parser.add_argument('--fps', dest='fps_rate', default="60", help="Sets FPS rate (default is 60)")
+    parser.add_argument('--flip-horizontal', dest='hflip', default="false", help="Flips the screen horizontally (default is false)")
+    parser.add_argument('--flip-vertical', dest='vflip', default="false", help="Flips the screen vertically (default is false)")
     args = parser.parse_args()
     # Probing v4l2loopback
     subprocess.run('sudo modprobe v4l2loopback video_nr=4 \'card_label=VirtualScreen\'', shell=True)
